@@ -1,42 +1,30 @@
-<!-- templates/terms.html -->
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Download Terms — PRANK</title>
-  <style>
-    body{font-family:Inter, system-ui, Arial; background:#0f1724; color:#e6eef8; display:flex; align-items:center; justify-content:center; height:100vh; margin:0;}
-    .card{background:#0b1220; padding:28px; border-radius:12px; width:90%; max-width:780px; box-shadow:0 10px 30px rgba(2,6,23,0.7);}
-    h1{margin:0 0 8px 0; font-size:22px;}
-    p{color:#99a7c2;}
-    .terms{background:#071026; padding:12px; border-radius:8px; margin:12px 0; max-height:260px; overflow:auto; color:#c7d6ea; font-size:14px;}
-    .controls{display:flex; gap:12px; align-items:center;}
-    input[type="checkbox"]{transform:scale(1.2)}
-    button{padding:10px 14px; border-radius:8px; border:0; cursor:pointer; font-weight:700; background:#0ea5a6; color:white;}
-  </style>
+  <meta charset="UTF-8">
+  <title>Terms & Email Request</title>
 </head>
-<body>
-  <div class="card">
-    <h1>Download Terms & Conditions</h1>
-    <p>Please read carefully. This prank file is harmless and purely cosmetic — no file system operations, no malicious behavior. By continuing you confirm you understand this is a joke and you accept responsibility for your own device.</p>
-
-    <div class="terms" role="region" aria-label="terms">
-      <strong>Terms (short version):</strong>
-      <ul>
-        <li>This prank is a theatrical harmless simulation — no files are changed.</li>
-        <li>Use only on consenting devices. Do not target people who did not consent.</li>
-        <li>By proceeding you accept responsibility and release the operator from liability.</li>
-      </ul>
-      <p style="font-size:13px;color:#9fb0d3">Full legalese omitted for brevity — this is a playful demo, not legal advice.</p>
-    </div>
-
-    <form method="post" action="{{ url_for('agree') }}">
-      <div class="controls">
-        <label><input type="checkbox" name="agree" /> I agree to the terms</label>
-        <button type="submit">Continue → Request OTP</button>
-      </div>
-    </form>
-  </div>
+<body style="font-family:sans-serif; text-align:center; padding:50px;">
+  <h1>🚀 Welcome to Boon’s Download Portal</h1>
+  <form method="POST" action="{{ url_for('request_otp') }}">
+    <p>
+      <textarea rows="5" cols="50" readonly>
+Terms of Use:
+- This prank is for entertainment purposes only.
+- No files will be harmed.
+- You agree to be awesome.
+      </textarea>
+    </p>
+    <p><input type="checkbox" name="agree" required> I agree to the terms</p>
+    <p>
+      <input type="email" name="email" placeholder="Enter your email" required>
+    </p>
+    <button type="submit">Request OTP</button>
+  </form>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul style="color:red;">{% for msg in messages %}<li>{{ msg }}</li>{% endfor %}</ul>
+    {% endif %}
+  {% endwith %}
 </body>
 </html>
