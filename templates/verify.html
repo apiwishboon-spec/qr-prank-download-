@@ -1,50 +1,20 @@
-<!-- templates/verify.html -->
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>OTP Verify</title>
-  <style>
-    body{font-family:Inter, system-ui, Arial; background:#071029; color:#e6eef8; display:flex; align-items:center; justify-content:center; height:100vh; margin:0;}
-    .card{background:#0b1220; padding:22px; border-radius:12px; width:94%; max-width:640px;}
-    input, button{padding:10px;border-radius:8px;border:0; font-size:15px;}
-    .row{display:flex; gap:10px; margin-top:12px;}
-    .note{color:#9fb0d3; font-size:13px;}
-  </style>
+  <meta charset="UTF-8">
+  <title>Verify OTP</title>
 </head>
-<body>
-  <div class="card">
-    <h2>{{ "Request OTP" if stage == "request" else "Enter OTP" }}</h2>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        <ul>
-          {% for category, msg in messages %}
-            <li style="color: {% if category=='danger' %}#ff6b6b{% elif category=='success' %}#7efc8d{% else %}#9fb0d3{% endif %};">{{ msg }}</li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
-
-    {% if stage == "request" %}
-      <form method="post" action="{{ url_for('request_otp') }}">
-        <label>Email:</label><br />
-        <input type="email" name="email" required placeholder="you@example.com" style="width:100%; margin-top:6px;" />
-        <div class="row">
-          <button type="submit" style="background:#0ea5a6;color:white">Request OTP</button>
-          <a href="{{ url_for('terms') }}" style="align-self:center;color:#9fb0d3;text-decoration:none">Back</a>
-        </div>
-        <p class="note">OTP expires in {{ config.get('OTP_EXPIRY_MINUTES', 10) }} minutes.</p>
-      </form>
-    {% else %}
-      <form method="post" action="{{ url_for('verify_otp') }}">
-        <label>Enter OTP (6 digits)</label><br/>
-        <input name="otp" maxlength="6" required placeholder="123456" style="width:40%; margin-top:6px;" />
-        <div class="row">
-          <button type="submit" style="background:#0ea5a6;color:white">Verify OTP</button>
-          <a href="{{ url_for('request_otp_page') }}" style="align-self:center;color:#9fb0d3;text-decoration:none">Resend / Back</a>
-        </div>
-      </form>
+<body style="font-family:sans-serif; text-align:center; padding:50px;">
+  <h2>🔐 Verify OTP</h2>
+  <p>We’ve sent a 6-digit OTP to <strong>{{ email }}</strong>. It’s valid for 10 minutes.</p>
+  <form method="POST">
+    <input type="text" name="otp" placeholder="Enter OTP" required>
+    <button type="submit">Verify</button>
+  </form>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul style="color:red;">{% for msg in messages %}<li>{{ msg }}</li>{% endfor %}</ul>
     {% endif %}
-  </div>
+  {% endwith %}
 </body>
 </html>
