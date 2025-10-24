@@ -1,0 +1,22 @@
+<!-- templates/download.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Your Download</title>
+  <style>
+    body{font-family:Inter, system-ui, Arial; background:#071029; color:#e6eef8; display:flex; align-items:center; justify-content:center; height:100vh; margin:0;}
+    .card{background:#0b1220; padding:22px; border-radius:12px; width:94%; max-width:640px;text-align:center;}
+    a.button{display:inline-block;padding:12px 18px;border-radius:10px;background:#2563eb;color:white;text-decoration:none;font-weight:700;}
+    p.note{color:#9fb0d3;}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Download Ready</h1>
+    <p class="note">Thanks for verifying — click below to download the prank bundle.</p>
+    <a class="button" href="{{ url_for('download_file') }}">Download prank.zip</a>
+    <p style="margin-top:10px;"><a href="{{ url_for('reset') }}" style="color:#9fb0d3">End session / Logout</a></p>
+  </div>
+</body>
+</html>
